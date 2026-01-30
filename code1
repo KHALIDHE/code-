@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMEBACK SEASON - 4 Month Mastery Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Work+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF3366;
+            --secondary: #00D9FF;
+            --dark: #0A0E27;
+            --dark-light: #1A1F3A;
+            --accent: #FFD700;
+            --text: #E0E6ED;
+            --success: #00FF88;
+            --warning: #FFB800;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 51, 102, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            animation: bgShift 20s ease infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 6rem;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: glitch 3s infinite;
+            letter-spacing: 4px;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            40% { transform: translateX(2px); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .hero .countdown {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-top: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--dark-light);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(255, 51, 102, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        /* Technology Cards */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .tech-card {
+            background: var(--dark-light);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 2px solid rgba(255, 51, 102, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 51, 102, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tech-card:hover::before {
+            opacity: 1;
+        }
+
+        .tech-card:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .tech-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .tech-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-not-started {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .status-beginning {
+            background: rgba(255, 51, 102, 0.2);
+            color: var(--primary);
+        }
+
+        .status-progress {
+            background: rgba(255, 184, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .status-advanced {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--secondary);
+        }
+
+        .status-mastered {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .tech-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .tech-stats span {
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        .tech-stats strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Timer Section */
+        .timer-section {
+            background: var(--dark-light);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 2px solid var(--primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 51, 102, 0.1) 0%, transparent 70%);
+        }
+
+        .timer-display {
+            font-family: 'Space Mono', monospace;
+            font-size: 5rem;
+            color: var(--accent);
+            margin: 2rem 0;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 51, 102, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--dark);
+            color: var(--text);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--dark);
+        }
+
+        .timer-sessions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .quick-session {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .quick-session:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: scale(1.05);
+        }
+
+        /* Session Log */
+        .session-log {
+            margin: 3rem 0;
+        }
+
+        .session-form {
+            background: var(--dark-light);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            background: var(--dark);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Work Sans', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        .sessions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .session-item {
+            background: var(--dark-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .session-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(255, 51, 102, 0.2);
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-tech {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .session-date {
+            font-family: 'Space Mono', monospace;
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .session-details {
+            color: var(--text);
+            opacity: 0.8;
+            margin: 0.5rem 0;
+        }
+
+        .session-duration {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--accent);
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .project-card {
+            background: var(--dark-light);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+            transition: height 0.3s;
+        }
+
+        .project-card:hover::before {
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.3);
+        }
+
+        .project-week {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .project-tech {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .project-desc {
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Objectives Section */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .objective-card {
+            background: linear-gradient(135deg, var(--dark-light), rgba(26, 31, 58, 0.8));
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .objective-card h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .objective-list {
+            list-style: none;
+        }
+
+        .objective-list li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .objective-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: 3px;
+        }
+
+        .section-header p {
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .timer-display {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats-grid,
+            .tech-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Delete button for sessions */
+        .delete-btn {
+            background: rgba(255, 51, 102, 0.2);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="nav-content">
+            <div class="logo">COMEBACK SEASON</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="showPage('timer')">Timer</a></li>
+                <li><a href="#" onclick="showPage('sessions')">Sessions</a></li>
+                <li><a href="#" onclick="showPage('projects')">Projects</a></li>
+                <li><a href="#" onclick="showPage('objectives')">Objectives</a></li>
+                <li><a href="#" onclick="showPage('backup')">Backup</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- DASHBOARD PAGE -->
+        <div id="dashboard" class="page-section active">
+            <div class="hero">
+                <h1>COMEBACK SEASON</h1>
+                <p>4 Months to Mastery. Every Day Counts.</p>
+                <div class="countdown" id="countdown">Loading...</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Sessions</h3>
+                    <div class="stat-value" id="totalSessions">0</div>
+                    <div class="stat-label">Study sessions completed</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Hours</h3>
+                    <div class="stat-value" id="totalHours">0</div>
+                    <div class="stat-label">Hours invested in mastery</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Current Streak</h3>
+                    <div class="stat-value" id="streak">0</div>
+                    <div class="stat-label">Consecutive days</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Overall Progress</h3>
+                    <div class="stat-value" id="overallProgress">0%</div>
+                    <div class="stat-label">Target completion</div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>TECHNOLOGIES</h2>
+                <p>Master 6 core technologies. Track your progress.</p>
+            </div>
+
+            <div class="tech-grid" id="techGrid">
+                <!-- Technologies will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- TIMER PAGE -->
+        <div id="timer" class="page-section">
+            <div class="section-header">
+                <h2>FOCUS TIMER</h2>
+                <p>Track your deep work sessions. Stay in the zone.</p>
+            </div>
+
+            <div class="timer-section">
+                <h3 style="color: var(--secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px;">Session Timer</h3>
+                <div class="timer-display" id="timerDisplay">00:00:00</div>
+                
+                <div class="timer-sessions">
+                    <div class="quick-session" onclick="setTimer(25)">25 min</div>
+                    <div class="quick-session" onclick="setTimer(45)">45 min</div>
+                    <div class="quick-session" onclick="setTimer(90)">90 min</div>
+                    <div class="quick-session" onclick="setTimer(120)">2 hours</div>
+                </div>
+
+                <div class="timer-controls">
+                    <button class="btn btn-primary" onclick="startTimer()">START</button>
+                    <button class="btn btn-secondary" onclick="pauseTimer()">PAUSE</button>
+                    <button class="btn btn-secondary" onclick="resetTimer()">RESET</button>
+                    <button class="btn btn-success" onclick="saveSession()">SAVE SESSION</button>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <label style="color: var(--secondary); font-weight: 600; margin-right: 1rem;">Select Technology:</label>
+                    <select id="timerTech" style="padding: 0.8rem; background: var(--dark); border: 2px solid var(--secondary); border-radius: 8px; color: var(--text); font-size: 1rem;">
+                        <option>Modeling Systeme</option>
+                        <option>Machine Learning</option>
+                        <option>Deep Learning</option>
+                        <option>DevOps</option>
+                        <option>Data Science</option>
+                        <option>Blockchain</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- SESSIONS PAGE -->
+        <div id="sessions" class="page-section">
+            <div class="section-header">
+                <h2>SESSION LOG</h2>
+                <p>Record every study session. Build your momentum.</p>
+            </div>
+
+            <div class="session-log">
+                <div class="session-form">
+                    <h3 style="color: var(--secondary); margin-bottom: 1.5rem;">Add New Session</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Technology</label>
+                            <select id="sessionTech">
+                                <option>Modeling Systeme</option>
+                                <option>Machine Learning</option>
+                                <option>Deep Learning</option>
+                                <option>DevOps</option>
+                                <option>Data Science</option>
+                                <option>Blockchain</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Duration (hours)</label>
+                            <input type="number" id="sessionDuration" step="0.5" min="0.5" placeholder="2.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="sessionDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Topics Covered</label>
+                        <input type="text" id="sessionTopics" placeholder="Linear Algebra, Matrix Operations...">
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea id="sessionNotes" rows="3" placeholder="What did you learn? Any challenges?"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="addSession()" style="margin-top: 1rem;">ADD SESSION</button>
+                </div>
+
+                <div class="sessions-list" id="sessionsList">
+                    <!-- Sessions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PROJECTS PAGE -->
+        <div id="projects" class="page-section">
+            <div class="section-header">
+                <h2>PROJECT ROADMAP</h2>
+                <p>14 projects. 16 weeks. Build your portfolio.</p>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- OBJECTIVES PAGE -->
+        <div id="objectives" class="page-section">
+            <div class="section-header">
+                <h2>YOUR OBJECTIVES</h2>
+                <p>The transformation journey. Month by month.</p>
+            </div>
+
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>MONTH 1: FOUNDATIONS</h3>
+                    <ul class="objective-list">
+                        <li>Build solid understanding of all 6 technologies</li>
+                        <li>Complete 4 mini-projects</li>
+                        <li>Establish daily study routine</li>
+                        <li>Deploy first ML model on cloud</li>
+                        <li>Master basic MATLAB & Simulink</li>
+                    </ul>
+                </div>
+
+                <div class="objective-card">
+                    <h3>MONTH 2: INTEGRATION</h3>
+                    <ul class="objective-list">
+                        <li>Combine multiple technologies in projects</li>
+                        <li>Work on Big Data & Blockchain</li>
+                        <li>Complete 4 intermediate projects</li>
+                        <li>Start building portfolio</li>
+                        <li>Begin job applications</li>
+                    </ul>
+                </div>
+
+                <div class="objective-card">
+                    <h3>MONTH 3: SPECIALIZATION</h3>
+                    <ul class="objective-list">
+                        <li>Deep dive into 2-3 favorite domains</li>
+                        <li>Complete team project with brother/Youness</li>
+                        <li>4 advanced portfolio projects</li>
+                        <li>Send 10+ job applications</li>
+                        <li>Master System Modeling & Security</li>
+                    </ul>
+                </div>
+
+                <div class="objective-card">
+                    <h3>MONTH 4: MASTERY</h3>
+                    <ul class="objective-list">
+                        <li>Ace all module exams</li>
+                        <li>Complete 2 masterpiece projects</li>
+                        <li>Land internship or job offer</li>
+                        <li>Production-grade portfolio ready</li>
+                        <li>Interview-ready technical skills</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem; text-align: center; padding: 3rem; background: linear-gradient(135deg, var(--dark-light), rgba(26, 31, 58, 0.8)); border-radius: 20px; border: 2px solid var(--primary);">
+                <h2 style="font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">REMEMBER</h2>
+                <p style="font-size: 1.5rem; margin: 1rem 0; color: var(--text);">"Consistency beats intensity"</p>
+                <p style="font-size: 1.5rem; margin: 1rem 0; color: var(--text);">"Build, don't just learn"</p>
+                <p style="font-size: 1.5rem; margin: 1rem 0; color: var(--text);">"Every day you get stronger"</p>
+                <p style="font-size: 2rem; margin: 2rem 0; color: var(--primary); font-weight: 800;">THIS IS YOUR COMEBACK SEASON 🔥</p>
+            </div>
+        </div>
+
+        <!-- BACKUP PAGE -->
+        <div id="backup" class="page-section">
+            <div class="section-header">
+                <h2>DATA BACKUP</h2>
+                <p>Export, import, and protect your progress.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                
+                <!-- Export Section -->
+                <div class="objective-card" style="border-color: var(--success);">
+                    <h3 style="color: var(--success);">📥 EXPORT DATA</h3>
+                    <p style="color: var(--text); margin: 1rem 0; opacity: 0.8;">
+                        Download all your data as a JSON file. Save it on your computer, cloud, or USB drive.
+                    </p>
+                    <button class="btn btn-success" onclick="exportData()" style="width: 100%; margin-top: 1rem;">
+                        DOWNLOAD BACKUP
+                    </button>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(0, 255, 136, 0.1); border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--success);">Last backup:</strong> <span id="lastBackup">Never</span>
+                    </div>
+                </div>
+
+                <!-- Import Section -->
+                <div class="objective-card" style="border-color: var(--secondary);">
+                    <h3 style="color: var(--secondary);">📤 IMPORT DATA</h3>
+                    <p style="color: var(--text); margin: 1rem 0; opacity: 0.8;">
+                        Restore your data from a backup file. This will replace current data.
+                    </p>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                    <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()" style="width: 100%; margin-top: 1rem;">
+                        RESTORE FROM BACKUP
+                    </button>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(0, 217, 255, 0.1); border-radius: 8px; font-size: 0.85rem; color: var(--warning);">
+                        ⚠️ Warning: Importing will overwrite your current data!
+                    </div>
+                </div>
+
+                <!-- Auto-backup Section -->
+                <div class="objective-card" style="border-color: var(--accent);">
+                    <h3 style="color: var(--accent);">⚡ AUTO-BACKUP</h3>
+                    <p style="color: var(--text); margin: 1rem 0; opacity: 0.8;">
+                        Automatically download a backup every week.
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                            <input type="checkbox" id="autoBackup" onchange="toggleAutoBackup()" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span style="font-weight: 600;">Enable weekly auto-backup</span>
+                        </label>
+                    </div>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 215, 0, 0.1); border-radius: 8px; font-size: 0.85rem;">
+                        <strong style="color: var(--accent);">Next auto-backup:</strong> <span id="nextBackup">Not scheduled</span>
+                    </div>
+                </div>
+
+                <!-- Reset Section -->
+                <div class="objective-card" style="border-color: var(--primary);">
+                    <h3 style="color: var(--primary);">🔄 RESET DATA</h3>
+                    <p style="color: var(--text); margin: 1rem 0; opacity: 0.8;">
+                        Start fresh. This will delete all data permanently.
+                    </p>
+                    <button class="btn btn-primary" onclick="resetAllData()" style="width: 100%; margin-top: 1rem;">
+                        RESET EVERYTHING
+                    </button>
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 51, 102, 0.1); border-radius: 8px; font-size: 0.85rem; color: var(--primary);">
+                        ⚠️ This action cannot be undone! Export first!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Statistics -->
+            <div style="margin-top: 3rem; padding: 2rem; background: var(--dark-light); border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                <h3 style="color: var(--secondary); margin-bottom: 1.5rem; text-align: center;">📊 YOUR DATA STATISTICS</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                    <div>
+                        <div style="font-size: 2.5rem; color: var(--primary); font-weight: 700;" id="dataSessions">0</div>
+                        <div style="color: var(--text); opacity: 0.7;">Total Sessions</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; color: var(--secondary); font-weight: 700;" id="dataProjects">0</div>
+                        <div style="color: var(--text); opacity: 0.7;">Projects Tracked</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; color: var(--accent); font-weight: 700;" id="dataSize">0 KB</div>
+                        <div style="color: var(--text); opacity: 0.7;">Data Size</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; color: var(--success); font-weight: 700;" id="dataBackups">0</div>
+                        <div style="color: var(--text); opacity: 0.7;">Backups Created</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, var(--dark-light), rgba(26, 31, 58, 0.8)); border-radius: 15px; border: 2px solid var(--accent);">
+                <h3 style="color: var(--accent); margin-bottom: 1rem;">💡 BACKUP TIPS</h3>
+                <ul class="objective-list">
+                    <li><strong>Export weekly:</strong> Make it a habit to backup every Sunday</li>
+                    <li><strong>Multiple copies:</strong> Save to Google Drive, Dropbox, and local PC</li>
+                    <li><strong>Version control:</strong> Keep old backups (backup_week1.json, backup_week2.json, etc.)</li>
+                    <li><strong>Before big changes:</strong> Always export before resetting or major updates</li>
+                    <li><strong>Cross-device sync:</strong> Export on one device, import on another to sync</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        const technologies = [
+            { name: 'Modeling Systeme', target: 60, completed: 0, hours: 0 },
+            { name: 'Machine Learning', target: 48, completed: 0, hours: 0 },
+            { name: 'Deep Learning', target: 48, completed: 0, hours: 0 },
+            { name: 'DevOps', target: 40, completed: 0, hours: 0 },
+            { name: 'Data Science', target: 40, completed: 0, hours: 0 },
+            { name: 'Blockchain', target: 32, completed: 0, hours: 0 }
+        ];
+
+        const projects = [
+            { week: 1, name: 'Inverted Pendulum Control', tech: 'MATLAB, Simulink, Control Theory', desc: 'Model, simulate, and control system', status: 0 },
+            { week: 2, name: 'Industrial ML Predictor', tech: 'Python, ML, Data Science', desc: 'Data preprocessing → Training → Deployment', status: 0 },
+            { week: 3, name: 'Hydraulic System + DL', tech: 'Simscape Fluids, Python, DL', desc: 'Optimize with neural networks', status: 0 },
+            { week: 4, name: 'DevOps ML Pipeline', tech: 'Docker, Kubernetes, ML, CI/CD', desc: 'Complete deployment pipeline', status: 0 },
+            { week: 5, name: 'Blockchain Supply Chain', tech: 'Blockchain, Solidity', desc: 'DApp with full traceability', status: 0 },
+            { week: 6, name: 'AI-Controlled Robot Arm', tech: 'Simscape, MATLAB, DL', desc: 'Intelligent control system', status: 0 },
+            { week: 7, name: 'Big Data Sensor Pipeline', tech: 'Python, Spark, Data Science', desc: 'Real-time analysis', status: 0 },
+            { week: 8, name: 'Autonomous Vehicle Sim', tech: 'MATLAB, DL, Computer Vision', desc: 'Perception + Control', status: 0 },
+            { week: 9, name: 'Blockchain Trading Bot', tech: 'Blockchain, ML, DevOps', desc: 'AI predictions + crypto', status: 0 },
+            { week: 10, name: 'Fluid Dynamics ML', tech: 'Simscape Fluids, Python, NN', desc: 'Predict fluid behavior', status: 0 },
+            { week: 11, name: 'Cloud AI Infrastructure', tech: 'DevOps, Kubernetes, ML/DL', desc: 'Production-ready platform', status: 0 },
+            { week: 12, name: 'Multi-Physics System', tech: 'MATLAB, Simulink, Simscape', desc: 'Complete integration', status: 0 },
+            { week: 13, name: 'Industrial Solution', tech: 'All Technologies', desc: 'End-to-end real problem', status: 0 },
+            { week: 14, name: 'Portfolio Masterpiece', tech: 'All Technologies', desc: 'Most complex project', status: 0 }
+        ];
+
+        let sessions = [];
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let isTimerRunning = false;
+
+        // Load data from localStorage
+        function loadData() {
+            const savedTech = localStorage.getItem('technologies');
+            const savedProjects = localStorage.getItem('projects');
+            const savedSessions = localStorage.getItem('sessions');
+
+            if (savedTech) {
+                const loaded = JSON.parse(savedTech);
+                technologies.forEach((tech, i) => {
+                    tech.completed = loaded[i].completed || 0;
+                    tech.hours = loaded[i].hours || 0;
+                });
+            }
+
+            if (savedProjects) {
+                const loaded = JSON.parse(savedProjects);
+                projects.forEach((proj, i) => {
+                    proj.status = loaded[i].status || 0;
+                });
+            }
+
+            if (savedSessions) {
+                sessions = JSON.parse(savedSessions);
+            }
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('technologies', JSON.stringify(technologies));
+            localStorage.setItem('projects', JSON.stringify(projects));
+            localStorage.setItem('sessions', JSON.stringify(sessions));
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Countdown Timer
+        function updateCountdown() {
+            const endDate = new Date('2025-06-01');
+            const now = new Date();
+            const diff = endDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('countdown').textContent = 
+                `${days}d ${hours}h ${minutes}m until mastery`;
+        }
+
+        // Update Stats
+        function updateStats() {
+            const totalSessions = sessions.length;
+            const totalHours = sessions.reduce((sum, s) => sum + parseFloat(s.duration), 0);
+            
+            // Calculate streak
+            let streak = 0;
+            const today = new Date().toISOString().split('T')[0];
+            const sortedSessions = [...sessions].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (sortedSessions.length > 0 && sortedSessions[0].date === today) {
+                streak = 1;
+                let currentDate = new Date(today);
+                for (let i = 1; i < sortedSessions.length; i++) {
+                    currentDate.setDate(currentDate.getDate() - 1);
+                    const prevDate = currentDate.toISOString().split('T')[0];
+                    if (sortedSessions[i].date === prevDate) {
+                        streak++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            // Calculate overall progress
+            const totalTarget = technologies.reduce((sum, t) => sum + t.target, 0);
+            const totalCompleted = technologies.reduce((sum, t) => sum + t.completed, 0);
+            const overallProgress = Math.round((totalCompleted / totalTarget) * 100);
+
+            document.getElementById('totalSessions').textContent = totalSessions;
+            document.getElementById('totalHours').textContent = totalHours.toFixed(1);
+            document.getElementById('streak').textContent = streak;
+            document.getElementById('overallProgress').textContent = overallProgress + '%';
+        }
+
+        // Render Technologies
+        function renderTechnologies() {
+            const grid = document.getElementById('techGrid');
+            grid.innerHTML = '';
+
+            technologies.forEach(tech => {
+                const progress = Math.round((tech.completed / tech.target) * 100);
+                let status = 'Not Started';
+                let statusClass = 'status-not-started';
+
+                if (progress > 0 && progress < 25) {
+                    status = '🔴 Beginning';
+                    statusClass = 'status-beginning';
+                } else if (progress >= 25 && progress < 50) {
+                    status = '🟡 In Progress';
+                    statusClass = 'status-progress';
+                } else if (progress >= 50 && progress < 75) {
+                    status = '🟠 Advanced';
+                    statusClass = 'status-advanced';
+                } else if (progress >= 75) {
+                    status = '🟢 Mastered';
+                    statusClass = 'status-mastered';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'tech-card';
+                card.innerHTML = `
+                    <div class="tech-header">
+                        <div class="tech-name">${tech.name}</div>
+                        <div class="tech-status ${statusClass}">${status}</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="tech-stats">
+                        <span>Sessions: <strong>${tech.completed}/${tech.target}</strong></span>
+                        <span>Hours: <strong>${tech.hours.toFixed(1)}</strong></span>
+                        <span>Progress: <strong>${progress}%</strong></span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Projects
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            projects.forEach(project => {
+                let status = 'Not Started';
+                let statusClass = 'status-not-started';
+
+                if (project.status > 0 && project.status < 100) {
+                    status = 'In Progress';
+                    statusClass = 'status-progress';
+                } else if (project.status === 100) {
+                    status = 'Completed';
+                    statusClass = 'status-mastered';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <div class="project-week">W${project.week}</div>
+                    <div class="project-title">${project.name}</div>
+                    <div class="project-tech">${project.tech}</div>
+                    <div class="project-desc">${project.desc}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${project.status}%"></div>
+                    </div>
+                    <div class="project-status-bar">
+                        <div class="tech-status ${statusClass}">${status}</div>
+                        <span style="color: var(--primary); font-weight: 700;">${project.status}%</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <input type="range" min="0" max="100" value="${project.status}" 
+                               onchange="updateProjectStatus(${projects.indexOf(project)}, this.value)"
+                               style="width: 100%; cursor: pointer;">
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Update Project Status
+        function updateProjectStatus(index, value) {
+            projects[index].status = parseInt(value);
+            saveData();
+            renderProjects();
+        }
+
+        // Render Sessions
+        function renderSessions() {
+            const list = document.getElementById('sessionsList');
+            list.innerHTML = '';
+
+            const sortedSessions = [...sessions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedSessions.forEach((session, index) => {
+                const item = document.createElement('div');
+                item.className = 'session-item';
+                item.innerHTML = `
+                    <div class="session-header">
+                        <div class="session-tech">${session.tech}</div>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <div class="session-date">${session.date}</div>
+                            <button class="delete-btn" onclick="deleteSession(${index})">DELETE</button>
+                        </div>
+                    </div>
+                    <div class="session-duration">${session.duration}h</div>
+                    <div class="session-details"><strong>Topics:</strong> ${session.topics}</div>
+                    ${session.notes ? `<div class="session-details"><strong>Notes:</strong> ${session.notes}</div>` : ''}
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Add Session
+        function addSession() {
+            const tech = document.getElementById('sessionTech').value;
+            const duration = parseFloat(document.getElementById('sessionDuration').value);
+            const date = document.getElementById('sessionDate').value;
+            const topics = document.getElementById('sessionTopics').value;
+            const notes = document.getElementById('sessionNotes').value;
+
+            if (!duration || !date || !topics) {
+                alert('Please fill in all required fields!');
+                return;
+            }
+
+            const session = { tech, duration, date, topics, notes };
+            sessions.push(session);
+
+            // Update technology stats
+            const techIndex = technologies.findIndex(t => t.name === tech);
+            if (techIndex !== -1) {
+                technologies[techIndex].completed++;
+                technologies[techIndex].hours += duration;
+            }
+
+            saveData();
+            renderSessions();
+            renderTechnologies();
+            updateStats();
+
+            // Clear form
+            document.getElementById('sessionDuration').value = '';
+            document.getElementById('sessionDate').value = '';
+            document.getElementById('sessionTopics').value = '';
+            document.getElementById('sessionNotes').value = '';
+
+            alert('Session added successfully! 🔥');
+        }
+
+        // Delete Session
+        function deleteSession(index) {
+            if (!confirm('Are you sure you want to delete this session?')) return;
+
+            const session = sessions[index];
+            
+            // Update technology stats
+            const techIndex = technologies.findIndex(t => t.name === session.tech);
+            if (techIndex !== -1) {
+                technologies[techIndex].completed--;
+                technologies[techIndex].hours -= session.duration;
+            }
+
+            sessions.splice(index, 1);
+            saveData();
+            renderSessions();
+            renderTechnologies();
+            updateStats();
+        }
+
+        // Timer Functions
+        function setTimer(minutes) {
+            timerSeconds = minutes * 60;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(timerSeconds / 3600);
+            const minutes = Math.floor((timerSeconds % 3600) / 60);
+            const seconds = timerSeconds % 60;
+
+            document.getElementById('timerDisplay').textContent = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (isTimerRunning) return;
+            
+            isTimerRunning = true;
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 0;
+            updateTimerDisplay();
+        }
+
+        function saveSession() {
+            if (timerSeconds < 60) {
+                alert('Session too short! Study for at least 1 minute.');
+                return;
+            }
+
+            const tech = document.getElementById('timerTech').value;
+            const duration = (timerSeconds / 3600).toFixed(2);
+            const date = new Date().toISOString().split('T')[0];
+            const topics = prompt('What topics did you cover?', '');
+
+            if (!topics) return;
+
+            const session = {
+                tech,
+                duration: parseFloat(duration),
+                date,
+                topics,
+                notes: `Timer session: ${Math.floor(timerSeconds / 60)} minutes`
+            };
+
+            sessions.push(session);
+
+            // Update technology stats
+            const techIndex = technologies.findIndex(t => t.name === tech);
+            if (techIndex !== -1) {
+                technologies[techIndex].completed++;
+                technologies[techIndex].hours += parseFloat(duration);
+            }
+
+            saveData();
+            renderSessions();
+            renderTechnologies();
+            updateStats();
+
+            resetTimer();
+            alert('Session saved! 🔥 Keep going!');
+        }
+
+        // Initialize
+        function init() {
+            loadData();
+            updateCountdown();
+            updateStats();
+            renderTechnologies();
+            renderProjects();
+            renderSessions();
+            updateBackupInfo();
+            checkAutoBackup();
+            
+            // Set today's date as default
+            document.getElementById('sessionDate').value = new Date().toISOString().split('T')[0];
+
+            // Update countdown every minute
+            setInterval(updateCountdown, 60000);
+            
+            // Check auto-backup daily
+            setInterval(checkAutoBackup, 86400000); // 24 hours
+        }
+
+        // Export Data
+        function exportData() {
+            const data = {
+                technologies: technologies,
+                projects: projects,
+                sessions: sessions,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            
+            const filename = `comeback-backup-${new Date().toISOString().split('T')[0]}.json`;
+            link.download = filename;
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            // Update last backup date
+            localStorage.setItem('lastBackupDate', new Date().toISOString());
+            
+            // Increment backup counter
+            const backupCount = parseInt(localStorage.getItem('backupCount') || '0') + 1;
+            localStorage.setItem('backupCount', backupCount.toString());
+            
+            updateBackupInfo();
+            alert('✅ Backup downloaded successfully! Save it somewhere safe. 🔥');
+        }
+
+        // Import Data
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Validate data
+                    if (!data.technologies || !data.projects || !data.sessions) {
+                        alert('❌ Invalid backup file! Please select a valid backup.');
+                        return;
+                    }
+
+                    // Confirm before overwriting
+                    if (!confirm('⚠️ This will replace ALL your current data. Are you sure?')) {
+                        return;
+                    }
+
+                    // Restore data
+                    technologies.length = 0;
+                    technologies.push(...data.technologies);
+                    
+                    projects.length = 0;
+                    projects.push(...data.projects);
+                    
+                    sessions.length = 0;
+                    sessions.push(...data.sessions);
+
+                    // Save to localStorage
+                    saveData();
+                    
+                    // Refresh UI
+                    renderTechnologies();
+                    renderProjects();
+                    renderSessions();
+                    updateStats();
+                    updateBackupInfo();
+
+                    alert('✅ Data restored successfully! Welcome back to your comeback! 🔥');
+                    
+                } catch (error) {
+                    alert('❌ Error reading backup file! Make sure it\'s a valid JSON file.');
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+
+        // Reset All Data
+        function resetAllData() {
+            if (!confirm('⚠️ WARNING: This will DELETE ALL your data permanently!')) {
+                return;
+            }
+            
+            if (!confirm('⚠️ FINAL WARNING: Are you ABSOLUTELY sure? This cannot be undone!')) {
+                return;
+            }
+
+            // Clear all data
+            technologies.forEach(tech => {
+                tech.completed = 0;
+                tech.hours = 0;
+            });
+            
+            projects.forEach(proj => {
+                proj.status = 0;
+            });
+            
+            sessions.length = 0;
+
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Refresh UI
+            renderTechnologies();
+            renderProjects();
+            renderSessions();
+            updateStats();
+            updateBackupInfo();
+
+            alert('🔄 All data has been reset. Fresh start! Let\'s go! 💪');
+        }
+
+        // Toggle Auto-Backup
+        function toggleAutoBackup() {
+            const enabled = document.getElementById('autoBackup').checked;
+            localStorage.setItem('autoBackupEnabled', enabled.toString());
+            
+            if (enabled) {
+                const nextDate = new Date();
+                nextDate.setDate(nextDate.getDate() + 7);
+                localStorage.setItem('nextAutoBackup', nextDate.toISOString());
+                alert('✅ Auto-backup enabled! You\'ll get a weekly backup automatically.');
+            } else {
+                localStorage.removeItem('nextAutoBackup');
+                alert('Auto-backup disabled.');
+            }
+            
+            updateBackupInfo();
+        }
+
+        // Check Auto-Backup
+        function checkAutoBackup() {
+            const enabled = localStorage.getItem('autoBackupEnabled') === 'true';
+            if (!enabled) return;
+
+            const nextBackupStr = localStorage.getItem('nextAutoBackup');
+            if (!nextBackupStr) return;
+
+            const nextBackup = new Date(nextBackupStr);
+            const now = new Date();
+
+            if (now >= nextBackup) {
+                exportData();
+                
+                // Schedule next backup
+                const newNextDate = new Date();
+                newNextDate.setDate(newNextDate.getDate() + 7);
+                localStorage.setItem('nextAutoBackup', newNextDate.toISOString());
+                
+                updateBackupInfo();
+            }
+        }
+
+        // Update Backup Info
+        function updateBackupInfo() {
+            // Last backup
+            const lastBackupStr = localStorage.getItem('lastBackupDate');
+            const lastBackupEl = document.getElementById('lastBackup');
+            if (lastBackupEl) {
+                if (lastBackupStr) {
+                    const date = new Date(lastBackupStr);
+                    lastBackupEl.textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                } else {
+                    lastBackupEl.textContent = 'Never';
+                }
+            }
+
+            // Next auto-backup
+            const autoBackupEnabled = localStorage.getItem('autoBackupEnabled') === 'true';
+            const autoBackupCheckbox = document.getElementById('autoBackup');
+            if (autoBackupCheckbox) {
+                autoBackupCheckbox.checked = autoBackupEnabled;
+            }
+
+            const nextBackupEl = document.getElementById('nextBackup');
+            if (nextBackupEl) {
+                if (autoBackupEnabled) {
+                    const nextBackupStr = localStorage.getItem('nextAutoBackup');
+                    if (nextBackupStr) {
+                        const date = new Date(nextBackupStr);
+                        nextBackupEl.textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                    } else {
+                        nextBackupEl.textContent = 'Not scheduled';
+                    }
+                } else {
+                    nextBackupEl.textContent = 'Not scheduled';
+                }
+            }
+
+            // Data statistics
+            const dataSessionsEl = document.getElementById('dataSessions');
+            if (dataSessionsEl) {
+                dataSessionsEl.textContent = sessions.length;
+            }
+
+            const dataProjectsEl = document.getElementById('dataProjects');
+            if (dataProjectsEl) {
+                dataProjectsEl.textContent = projects.length;
+            }
+
+            const dataSizeEl = document.getElementById('dataSize');
+            if (dataSizeEl) {
+                const dataStr = JSON.stringify({ technologies, projects, sessions });
+                const sizeKB = (new Blob([dataStr]).size / 1024).toFixed(2);
+                dataSizeEl.textContent = sizeKB + ' KB';
+            }
+
+            const dataBackupsEl = document.getElementById('dataBackups');
+            if (dataBackupsEl) {
+                const backupCount = localStorage.getItem('backupCount') || '0';
+                dataBackupsEl.textContent = backupCount;
+            }
+        }
+
+        // Start app
+        init();
+    </script>
+</body>
+</html>
