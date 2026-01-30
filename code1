@@ -816,8 +816,6 @@
                 <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
                 <li><a href="#" onclick="showPage('timer')">Timer</a></li>
                 <li><a href="#" onclick="showPage('sessions')">Sessions</a></li>
-                <li><a href="#" onclick="showPage('projects')">Projects</a></li>
-                <li><a href="#" onclick="showPage('objectives')">Objectives</a></li>
                 <li><a href="#" onclick="showPage('backup')">Backup</a></li>
             </ul>
         </div>
@@ -857,7 +855,10 @@
 
             <div class="section-header">
                 <h2>TECHNOLOGIES</h2>
-                <p>Master 6 core technologies. Track your progress.</p>
+                <p>Master your core modules. Track your progress.</p>
+                <button class="btn btn-primary" onclick="addNewTechnology()" style="margin-top: 1rem;">
+                    ➕ ADD NEW MODULE
+                </button>
             </div>
 
             <div class="tech-grid" id="techGrid">
@@ -952,80 +953,6 @@
             </div>
         </div>
 
-        <!-- PROJECTS PAGE -->
-        <div id="projects" class="page-section">
-            <div class="section-header">
-                <h2>PROJECT ROADMAP</h2>
-                <p>14 projects. 16 weeks. Build your portfolio.</p>
-            </div>
-
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Projects will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- OBJECTIVES PAGE -->
-        <div id="objectives" class="page-section">
-            <div class="section-header">
-                <h2>YOUR OBJECTIVES</h2>
-                <p>The transformation journey. Month by month.</p>
-            </div>
-
-            <div class="objectives-grid">
-                <div class="objective-card">
-                    <h3>MONTH 1: FOUNDATIONS</h3>
-                    <ul class="objective-list">
-                        <li>Build solid understanding of all 6 technologies</li>
-                        <li>Complete 4 mini-projects</li>
-                        <li>Establish daily study routine</li>
-                        <li>Deploy first ML model on cloud</li>
-                        <li>Master basic MATLAB & Simulink</li>
-                    </ul>
-                </div>
-
-                <div class="objective-card">
-                    <h3>MONTH 2: INTEGRATION</h3>
-                    <ul class="objective-list">
-                        <li>Combine multiple technologies in projects</li>
-                        <li>Work on Big Data & Blockchain</li>
-                        <li>Complete 4 intermediate projects</li>
-                        <li>Start building portfolio</li>
-                        <li>Begin job applications</li>
-                    </ul>
-                </div>
-
-                <div class="objective-card">
-                    <h3>MONTH 3: SPECIALIZATION</h3>
-                    <ul class="objective-list">
-                        <li>Deep dive into 2-3 favorite domains</li>
-                        <li>Complete team project with brother/Youness</li>
-                        <li>4 advanced portfolio projects</li>
-                        <li>Send 10+ job applications</li>
-                        <li>Master System Modeling & Security</li>
-                    </ul>
-                </div>
-
-                <div class="objective-card">
-                    <h3>MONTH 4: MASTERY</h3>
-                    <ul class="objective-list">
-                        <li>Ace all module exams</li>
-                        <li>Complete 2 masterpiece projects</li>
-                        <li>Land internship or job offer</li>
-                        <li>Production-grade portfolio ready</li>
-                        <li>Interview-ready technical skills</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style="margin-top: 4rem; text-align: center; padding: 3rem; background: linear-gradient(135deg, var(--dark-light), rgba(26, 31, 58, 0.8)); border-radius: 20px; border: 2px solid var(--primary);">
-                <h2 style="font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">REMEMBER</h2>
-                <p style="font-size: 1.5rem; margin: 1rem 0; color: var(--text);">"Consistency beats intensity"</p>
-                <p style="font-size: 1.5rem; margin: 1rem 0; color: var(--text);">"Build, don't just learn"</p>
-                <p style="font-size: 1.5rem; margin: 1rem 0; color: var(--text);">"Every day you get stronger"</p>
-                <p style="font-size: 2rem; margin: 2rem 0; color: var(--primary); font-weight: 800;">THIS IS YOUR COMEBACK SEASON 🔥</p>
-            </div>
-        </div>
-
         <!-- BACKUP PAGE -->
         <div id="backup" class="page-section">
             <div class="section-header">
@@ -1106,7 +1033,7 @@
                     </div>
                     <div>
                         <div style="font-size: 2.5rem; color: var(--secondary); font-weight: 700;" id="dataProjects">0</div>
-                        <div style="color: var(--text); opacity: 0.7;">Projects Tracked</div>
+                        <div style="color: var(--text); opacity: 0.7;">Modules Tracked</div>
                     </div>
                     <div>
                         <div style="font-size: 2.5rem; color: var(--accent); font-weight: 700;" id="dataSize">0 KB</div>
@@ -1141,24 +1068,12 @@
             { name: 'Deep Learning', target: 48, completed: 0, hours: 0 },
             { name: 'DevOps', target: 40, completed: 0, hours: 0 },
             { name: 'Data Science', target: 40, completed: 0, hours: 0 },
-            { name: 'Blockchain', target: 32, completed: 0, hours: 0 }
-        ];
-
-        const projects = [
-            { week: 1, name: 'Inverted Pendulum Control', tech: 'MATLAB, Simulink, Control Theory', desc: 'Model, simulate, and control system', status: 0 },
-            { week: 2, name: 'Industrial ML Predictor', tech: 'Python, ML, Data Science', desc: 'Data preprocessing → Training → Deployment', status: 0 },
-            { week: 3, name: 'Hydraulic System + DL', tech: 'Simscape Fluids, Python, DL', desc: 'Optimize with neural networks', status: 0 },
-            { week: 4, name: 'DevOps ML Pipeline', tech: 'Docker, Kubernetes, ML, CI/CD', desc: 'Complete deployment pipeline', status: 0 },
-            { week: 5, name: 'Blockchain Supply Chain', tech: 'Blockchain, Solidity', desc: 'DApp with full traceability', status: 0 },
-            { week: 6, name: 'AI-Controlled Robot Arm', tech: 'Simscape, MATLAB, DL', desc: 'Intelligent control system', status: 0 },
-            { week: 7, name: 'Big Data Sensor Pipeline', tech: 'Python, Spark, Data Science', desc: 'Real-time analysis', status: 0 },
-            { week: 8, name: 'Autonomous Vehicle Sim', tech: 'MATLAB, DL, Computer Vision', desc: 'Perception + Control', status: 0 },
-            { week: 9, name: 'Blockchain Trading Bot', tech: 'Blockchain, ML, DevOps', desc: 'AI predictions + crypto', status: 0 },
-            { week: 10, name: 'Fluid Dynamics ML', tech: 'Simscape Fluids, Python, NN', desc: 'Predict fluid behavior', status: 0 },
-            { week: 11, name: 'Cloud AI Infrastructure', tech: 'DevOps, Kubernetes, ML/DL', desc: 'Production-ready platform', status: 0 },
-            { week: 12, name: 'Multi-Physics System', tech: 'MATLAB, Simulink, Simscape', desc: 'Complete integration', status: 0 },
-            { week: 13, name: 'Industrial Solution', tech: 'All Technologies', desc: 'End-to-end real problem', status: 0 },
-            { week: 14, name: 'Portfolio Masterpiece', tech: 'All Technologies', desc: 'Most complex project', status: 0 }
+            { name: 'Blockchain', target: 32, completed: 0, hours: 0 },
+            { name: 'Projet with Youssef & Coworker', target: 30, completed: 0, hours: 0 },
+            { name: 'Projet Personnel & Recherche des Stages', target: 25, completed: 0, hours: 0 },
+            { name: 'Find Job & Freelancing', target: 20, completed: 0, hours: 0 },
+            { name: 'Security & Administration Base de Donner', target: 35, completed: 0, hours: 0 },
+            { name: 'Project with Youness', target: 30, completed: 0, hours: 0 }
         ];
 
         let sessions = [];
@@ -1169,21 +1084,15 @@
         // Load data from localStorage
         function loadData() {
             const savedTech = localStorage.getItem('technologies');
-            const savedProjects = localStorage.getItem('projects');
             const savedSessions = localStorage.getItem('sessions');
 
             if (savedTech) {
                 const loaded = JSON.parse(savedTech);
-                technologies.forEach((tech, i) => {
-                    tech.completed = loaded[i].completed || 0;
-                    tech.hours = loaded[i].hours || 0;
-                });
-            }
-
-            if (savedProjects) {
-                const loaded = JSON.parse(savedProjects);
-                projects.forEach((proj, i) => {
-                    proj.status = loaded[i].status || 0;
+                loaded.forEach((tech, i) => {
+                    if (technologies[i]) {
+                        technologies[i].completed = tech.completed || 0;
+                        technologies[i].hours = tech.hours || 0;
+                    }
                 });
             }
 
@@ -1195,7 +1104,6 @@
         // Save data to localStorage
         function saveData() {
             localStorage.setItem('technologies', JSON.stringify(technologies));
-            localStorage.setItem('projects', JSON.stringify(projects));
             localStorage.setItem('sessions', JSON.stringify(sessions));
         }
 
@@ -1261,7 +1169,7 @@
             const grid = document.getElementById('techGrid');
             grid.innerHTML = '';
 
-            technologies.forEach(tech => {
+            technologies.forEach((tech, index) => {
                 const progress = Math.round((tech.completed / tech.target) * 100);
                 let status = 'Not Started';
                 let statusClass = 'status-not-started';
@@ -1285,7 +1193,10 @@
                 card.innerHTML = `
                     <div class="tech-header">
                         <div class="tech-name">${tech.name}</div>
-                        <div class="tech-status ${statusClass}">${status}</div>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <div class="tech-status ${statusClass}">${status}</div>
+                            <button class="delete-btn" onclick="deleteTechnology(${index})" title="Delete this module">✕</button>
+                        </div>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${progress}%"></div>
@@ -1300,52 +1211,63 @@
             });
         }
 
-        // Render Projects
-        function renderProjects() {
-            const grid = document.getElementById('projectsGrid');
-            grid.innerHTML = '';
+        // Add New Technology
+        function addNewTechnology() {
+            const name = prompt('Enter module name:', 'New Module');
+            if (!name) return;
 
-            projects.forEach(project => {
-                let status = 'Not Started';
-                let statusClass = 'status-not-started';
+            const target = parseInt(prompt('Enter target number of sessions:', '30'));
+            if (!target || target <= 0) {
+                alert('Invalid target number!');
+                return;
+            }
 
-                if (project.status > 0 && project.status < 100) {
-                    status = 'In Progress';
-                    statusClass = 'status-progress';
-                } else if (project.status === 100) {
-                    status = 'Completed';
-                    statusClass = 'status-mastered';
-                }
-
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                card.innerHTML = `
-                    <div class="project-week">W${project.week}</div>
-                    <div class="project-title">${project.name}</div>
-                    <div class="project-tech">${project.tech}</div>
-                    <div class="project-desc">${project.desc}</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${project.status}%"></div>
-                    </div>
-                    <div class="project-status-bar">
-                        <div class="tech-status ${statusClass}">${status}</div>
-                        <span style="color: var(--primary); font-weight: 700;">${project.status}%</span>
-                    </div>
-                    <div style="margin-top: 1rem;">
-                        <input type="range" min="0" max="100" value="${project.status}" 
-                               onchange="updateProjectStatus(${projects.indexOf(project)}, this.value)"
-                               style="width: 100%; cursor: pointer;">
-                    </div>
-                `;
-                grid.appendChild(card);
+            technologies.push({
+                name: name,
+                target: target,
+                completed: 0,
+                hours: 0
             });
+
+            saveData();
+            renderTechnologies();
+            updateTechnologySelects();
+            alert('✅ Module added successfully! 🔥');
         }
 
-        // Update Project Status
-        function updateProjectStatus(index, value) {
-            projects[index].status = parseInt(value);
+        // Delete Technology
+        function deleteTechnology(index) {
+            if (!confirm(`Are you sure you want to delete "${technologies[index].name}"?`)) return;
+
+            const techName = technologies[index].name;
+            
+            // Remove all sessions for this technology
+            sessions = sessions.filter(s => s.tech !== techName);
+            
+            // Remove the technology
+            technologies.splice(index, 1);
+            
             saveData();
-            renderProjects();
+            renderTechnologies();
+            renderSessions();
+            updateStats();
+            updateTechnologySelects();
+            
+            alert('Module deleted successfully!');
+        }
+
+        // Update technology selects (in timer and session form)
+        function updateTechnologySelects() {
+            const timerSelect = document.getElementById('timerTech');
+            const sessionSelect = document.getElementById('sessionTech');
+
+            if (timerSelect) {
+                timerSelect.innerHTML = technologies.map(t => `<option>${t.name}</option>`).join('');
+            }
+
+            if (sessionSelect) {
+                sessionSelect.innerHTML = technologies.map(t => `<option>${t.name}</option>`).join('');
+            }
         }
 
         // Render Sessions
@@ -1355,7 +1277,8 @@
 
             const sortedSessions = [...sessions].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-            sortedSessions.forEach((session, index) => {
+            sortedSessions.forEach((session) => {
+                const originalIndex = sessions.indexOf(session);
                 const item = document.createElement('div');
                 item.className = 'session-item';
                 item.innerHTML = `
@@ -1363,7 +1286,7 @@
                         <div class="session-tech">${session.tech}</div>
                         <div style="display: flex; gap: 1rem; align-items: center;">
                             <div class="session-date">${session.date}</div>
-                            <button class="delete-btn" onclick="deleteSession(${index})">DELETE</button>
+                            <button class="delete-btn" onclick="deleteSession(${originalIndex})">DELETE</button>
                         </div>
                     </div>
                     <div class="session-duration">${session.duration}h</div>
@@ -1512,8 +1435,8 @@
             updateCountdown();
             updateStats();
             renderTechnologies();
-            renderProjects();
             renderSessions();
+            updateTechnologySelects();
             updateBackupInfo();
             checkAutoBackup();
             
@@ -1531,7 +1454,6 @@
         function exportData() {
             const data = {
                 technologies: technologies,
-                projects: projects,
                 sessions: sessions,
                 exportDate: new Date().toISOString(),
                 version: '1.0'
@@ -1574,7 +1496,7 @@
                     const data = JSON.parse(e.target.result);
                     
                     // Validate data
-                    if (!data.technologies || !data.projects || !data.sessions) {
+                    if (!data.technologies || !data.sessions) {
                         alert('❌ Invalid backup file! Please select a valid backup.');
                         return;
                     }
@@ -1588,9 +1510,6 @@
                     technologies.length = 0;
                     technologies.push(...data.technologies);
                     
-                    projects.length = 0;
-                    projects.push(...data.projects);
-                    
                     sessions.length = 0;
                     sessions.push(...data.sessions);
 
@@ -1599,9 +1518,9 @@
                     
                     // Refresh UI
                     renderTechnologies();
-                    renderProjects();
                     renderSessions();
                     updateStats();
+                    updateTechnologySelects();
                     updateBackupInfo();
 
                     alert('✅ Data restored successfully! Welcome back to your comeback! 🔥');
@@ -1633,10 +1552,6 @@
                 tech.hours = 0;
             });
             
-            projects.forEach(proj => {
-                proj.status = 0;
-            });
-            
             sessions.length = 0;
 
             // Clear localStorage
@@ -1644,7 +1559,6 @@
             
             // Refresh UI
             renderTechnologies();
-            renderProjects();
             renderSessions();
             updateStats();
             updateBackupInfo();
